@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class JournalController extends Controller
 {
-    public function index()
+    public function index($user)
     {
-        return Journal::all();
+        return Journal::where('user_id',$user)->get();
     }
     public function store(Request $request)
     {

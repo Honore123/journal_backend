@@ -18,16 +18,17 @@ use App\Http\Controllers\UserController;
 |
 */
 Route::group(['middleware'=>['auth:sanctum']],function (){
+    Route::prefix('/journals')->group(function (){
+        Route::get('/{user}', [JournalController::class,'index']);
+        Route::post('', [JournalController::class,'store']);
+        Route::put('/{journal}',[JournalController::class,'update']);
+        Route::delete('/{journal}',[JournalController::class,'destroy']);
+    });
     Route::prefix('/users')->group(function (){
         Route::post('/logout',[AuthController::class,'logout']);
     });
 });
-Route::prefix('/journals')->group(function (){
-    Route::get('', [JournalController::class,'index']);
-    Route::post('', [JournalController::class,'store']);
-    Route::put('/{journal}',[JournalController::class,'update']);
-    Route::delete('/{journal}',[JournalController::class,'destroy']);
-});
+
 Route::prefix('/users')->group(function (){
     Route::post('login', [AuthController::class,'login']);
     Route::post('register', [UserController::class,'store']);
